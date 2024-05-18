@@ -1,21 +1,20 @@
-import React from 'react';
-import { Switch, Route } from "react-router-dom";
+// src/App.jsx
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
-import TKDN from './pages/Tkdn';
-import NONTKDN from './pages/Nontkdn';
-import Error from "./pages/Error";
+import TKDN from "./pages/Tkdn";
+import NonTKDN from "./pages/Nontkdn";
 
-const App = () => {
+function App() {
   return (
-    <>
+    <div className="App">
       <Switch>
-        <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route path="/tkdn" component={TKDN} />
-        <Route path="/nontkdn" component={NONTKDN} />
-        <Route path="*" component={Error} />
+        <Route path="/non-tkdn" component={NonTKDN} />
       </Switch>
-    </>
+    </div>
   );
-};
+}
 
 export default App;
