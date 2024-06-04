@@ -10,27 +10,28 @@ import PCSet from "./../assets/logo/6.png";
 function TKDN() {
   return (
     <>
+      <h1 className="text-center text-3xl font-bold mt-2">
+        Silahkan Pilih Produk :
+      </h1>
       {/* Product List Component */}
       <div className="container grid grid-cols-3 gap-8 max-w-xl mx-auto py-4">
         {/* Keyboard */}
-        <a href="/asasdasd" className="group block">
-          <img
-            src={KB}
-            alt="Keyboard"
-            className="aspect-square w-full rounded object-cover bg-cover"
-          />
-          <div className="mt-3">
-            <h3 className="font-medium text-center text-gray-900 ">Keyboard</h3>
-            <a
-              href="/asasdasd"
-              className="mt-1 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              See more..
-            </a>
-          </div>
-        </a>
+        <Link to="/cardproduct">
+          <span className="group block hover:opacity-50">
+            <img
+              src={KB}
+              alt="Keyboard"
+              className="aspect-square w-full rounded object-cover bg-cover "
+            />
+            <div className="mt-3">
+              <h3 className="font-medium text-center text-gray-900 ">
+                Keyboard
+              </h3>
+            </div>
+          </span>
+        </Link>
         {/* Monitor */}
-        <a href="/asasdasd" className="group block">
+        <Link to="/cardproduct">
           <img
             src={MNTR}
             alt="Monitor"
@@ -38,16 +39,10 @@ function TKDN() {
           />
           <div className="mt-3">
             <h3 className="font-medium text-center text-gray-900 ">Monitor</h3>
-            <a
-              href="/asasdasd"
-              className="mt-1 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              See more..
-            </a>
           </div>
-        </a>
+        </Link>
         {/* Proyektor */}
-        <a href="/asasdasd" className="group block">
+        <Link to="/cardproduct">
           <img
             src={PJTR}
             alt="Proyektor"
@@ -57,16 +52,10 @@ function TKDN() {
             <h3 className="font-medium text-center text-gray-900 ">
               Proyektor
             </h3>
-            <a
-              href="/asasdasd"
-              className="mt-1 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              See more..
-            </a>
           </div>
-        </a>
+        </Link>
         {/* Keyboard Mouse */}
-        <a href="/asasdasd" className="group block">
+        <Link to="/cardproduct">
           <img
             src={KBM}
             alt="Proyektor"
@@ -76,16 +65,10 @@ function TKDN() {
             <h3 className="font-medium text-center text-gray-900 ">
               Keyboard Mouse
             </h3>
-            <a
-              href="/asasdasd"
-              className="mt-1 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              See more..
-            </a>
           </div>
-        </a>
+        </Link>
         {/* PC */}
-        <a href="/asasdasd" className="group block">
+        <Link to="/cardproduct">
           <img
             src={PC}
             alt="CPU"
@@ -93,16 +76,10 @@ function TKDN() {
           />
           <div className="mt-3">
             <h3 className="font-medium text-center text-gray-900 ">CPU</h3>
-            <a
-              href="/asasdasd"
-              className="mt-1 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              See more..
-            </a>
           </div>
-        </a>
+        </Link>
         {/* PC Set */}
-        <a href="/asasdasd" className="group block">
+        <Link to="/cardproduct">
           <img
             src={PCSet}
             alt="PC Set"
@@ -110,14 +87,8 @@ function TKDN() {
           />
           <div className="mt-3">
             <h3 className="font-medium text-center text-gray-900 ">PC Setup</h3>
-            <a
-              href="/asasdasd"
-              className="mt-1 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              See more..
-            </a>
           </div>
-        </a>
+        </Link>
       </div>
       {/* End Product List Component */}
       {/* Button Back */}
