@@ -1,0 +1,45 @@
+/* Add these styles to your existing sidebarA.css */
+
+/* Light mode styles */
+.sidebar-light {
+  background-color: white;
+  color: black;
+}
+
+.content-light {
+  background-color: #f9f9f9;
+  color: black;
+}
+
+/* Dark mode styles */
+.sidebar-dark {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.content-dark {
+  background-color: #121212;
+  color: white;
+}
+
+body {
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark {
+  background-color: #2a2b2e;
+  color: white;
+}
+
+.dark nav,
+.dark .bg-blue-800 {
+  background-color: #43537d;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark .bg-white {
+  background-color: #434752;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

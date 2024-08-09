@@ -10,93 +10,44 @@ import PCSet from "./../assets/logo/6.png";
 function TKDN() {
   return (
     <>
-      <h1 className="text-center text-3xl font-bold mt-2">
-        Silahkan Pilih Produk :
+      <h1 className="text-center text-3xl font-bold mt-6 mb-8block text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">
+        Silahkan Pilih Produk
       </h1>
       {/* Product List Component */}
-      <div className="container grid grid-cols-3 gap-8 max-w-xl mx-auto py-4">
-        {/* Keyboard */}
-        <Link to="/cardproduct">
-          <span className="group block hover:opacity-50">
-            <img
-              src={KB}
-              alt="Keyboard"
-              className="aspect-square w-full rounded object-cover bg-cover "
-            />
-            <div className="mt-3">
-              <h3 className="font-medium text-center text-gray-900 ">
-                Keyboard
-              </h3>
+      <div className="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        {[
+          { src: KB, alt: "Keyboard", label: "Keyboard" },
+          { src: MNTR, alt: "Monitor", label: "Monitor" },
+          { src: PJTR, alt: "Proyektor", label: "Proyektor" },
+          { src: KBM, alt: "Keyboard Mouse", label: "Keyboard Mouse" },
+          { src: PC, alt: "CPU", label: "CPU" },
+          { src: PCSet, alt: "PC Set", label: "PC Setup" },
+        ].map((product, index) => (
+          <Link key={index} to="/cardproduct">
+            <div className="group block overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+              <img
+                src={product.src}
+                alt={product.alt}
+                className="w-full h-48 object-cover transition-transform duration-300 transform group-hover:scale-105"
+              />
+              <div className="p-4 bg-white">
+                <h3 className="text-center font-medium text-gray-900">
+                  {product.label}
+                </h3>
+              </div>
             </div>
-          </span>
-        </Link>
-        {/* Monitor */}
-        <Link to="/cardproduct">
-          <img
-            src={MNTR}
-            alt="Monitor"
-            className="aspect-square w-full rounded object-cover bg-cover"
-          />
-          <div className="mt-3">
-            <h3 className="font-medium text-center text-gray-900 ">Monitor</h3>
-          </div>
-        </Link>
-        {/* Proyektor */}
-        <Link to="/cardproduct">
-          <img
-            src={PJTR}
-            alt="Proyektor"
-            className="aspect-square w-full rounded object-cover bg-cover"
-          />
-          <div className="mt-3">
-            <h3 className="font-medium text-center text-gray-900 ">
-              Proyektor
-            </h3>
-          </div>
-        </Link>
-        {/* Keyboard Mouse */}
-        <Link to="/cardproduct">
-          <img
-            src={KBM}
-            alt="Proyektor"
-            className="aspect-square w-full rounded object-cover bg-cover"
-          />
-          <div className="mt-3">
-            <h3 className="font-medium text-center text-gray-900 ">
-              Keyboard Mouse
-            </h3>
-          </div>
-        </Link>
-        {/* PC */}
-        <Link to="/cardproduct">
-          <img
-            src={PC}
-            alt="CPU"
-            className="aspect-square w-full rounded object-cover bg-cover"
-          />
-          <div className="mt-3">
-            <h3 className="font-medium text-center text-gray-900 ">CPU</h3>
-          </div>
-        </Link>
-        {/* PC Set */}
-        <Link to="/cardproduct">
-          <img
-            src={PCSet}
-            alt="PC Set"
-            className="aspect-square w-full rounded object-cover bg-cover"
-          />
-          <div className="mt-3">
-            <h3 className="font-medium text-center text-gray-900 ">PC Setup</h3>
-          </div>
-        </Link>
+          </Link>
+        ))}
       </div>
       {/* End Product List Component */}
       {/* Button Back */}
-      <Link to="/">
-        <button className="container grid grid-cols-1 max-w-xl mx-auto mt-6 mb-2 rounded bg-indigo-600 px-5 py-3 text-sm font-medium text-white  hover:bg-indigo-700 focus:outline-none focus:ring">
-          Go Back Home
-        </button>
-      </Link>
+      <div className="flex justify-center mt-8 mb-10">
+        <Link to="/">
+          <button className="px-20 py-4 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
+            Go Back Home
+          </button>
+        </Link>
+      </div>
       {/* End Button Back */}
     </>
   );
