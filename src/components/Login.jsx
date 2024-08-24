@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import komputer from "../assets/logo/komputer.gif";
 import EC from "../assets/logo/EC.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,57 +12,52 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
+  const [role, setRole] = useState("admin");
+
+  const navigate = useNavigate(); // Hook untuk navigasi
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
 
-    const loginData = { username, password };
+    const data = {
+      username: username,
+      password: password,
+      role: role,
+    };
 
     try {
-      const response = await fetch("http://localhost:7000/api/pengguna/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-      });
+      const response = await axios.post(
+        `http://localhost:7000/api/pengguna/login`,
+        data
+      );
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Login successful:", data);
-
-        // Save token and user data to local storage
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userData", JSON.stringify(data.userData));
-
-        // Show success alert
+      if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Login Successful",
-          text: "You will be redirected to the dashboard.",
-        }).then(() => {
-          // Redirect to the dashboard
+          title: "Berhasil Login",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        const userData = response.data.data.userData;
+
+        // Simpan data ke localStorage
+        localStorage.setItem("id", userData.idPengguna); // Perbarui dengan nama properti yang benar
+        localStorage.setItem("role", userData.rolePengguna); // Perbarui dengan nama properti yang benar
+        localStorage.setItem("token", response.data.data.token);
+
+        // Redirect menggunakan navigate
+        setTimeout(() => {
           navigate("/dashboard");
-        });
-      } else {
-        setErrorMessage("Invalid username or password.");
-        // Show error alert
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: "Invalid username or password.",
-        });
+        }, 1500);
       }
     } catch (error) {
       console.error("Error during login:", error);
-      setErrorMessage("An error occurred. Please try again.");
-      // Show error alert
+      setErrorMessage("Terjadi kesalahan saat login. Coba lagi nanti.");
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: "An error occurred. Please try again.",
+        text: "Terjadi kesalahan saat login. Coba lagi nanti.",
       });
     }
   };
@@ -85,13 +81,11 @@ const Login = () => {
         <div className="lg:w-2/4 xl:w-2/4 p-8 sm:p-8">
           <div className="flex flex-col items-center">
             <div className="text-center">
-              <div className="text-center">
-                <img
-                  className="mx-auto h-24 w-auto"
-                  src={EC}
-                  alt="Excellent Logo"
-                />
-              </div>
+              <img
+                className="mx-auto h-24 w-auto"
+                src={EC}
+                alt="Excellent Logo"
+              />
               <h1 className="text-xl xl:text-3xl font-extrabold text-sky-600 my-2">
                 E-KATALOG
               </h1>
