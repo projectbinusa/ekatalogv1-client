@@ -4,14 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBarsStaggered,
   faXmark,
-  faChevronDown,
-  faChevronUp,
   faCaretDown,
   faCaretUp,
+  faTags,
+  faBoxOpen,
+  faTachometerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import EC from "../assets/logo/EC.png";
 import Swal from "sweetalert2";
-import { pengguna } from "./Api";
+// import { pengguna } from "./Api";
 
 const SidebarAdmin = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -24,20 +25,20 @@ const SidebarAdmin = () => {
     "https://kimia.fkip.usk.ac.id/wp-content/uploads/2017/10/1946429.png"
   );
 
-  useEffect(() => {
-    const fetchAdmin = async () => {
-      try {
-        const adminData = await pengguna(id);
-        if (adminData.image) {
-          setProfilePic(adminData.image);
-        }
-      } catch (error) {
-        console.error("Failed to fetch admin:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAdmin = async () => {
+  //     try {
+  //       const adminData = await pengguna(id);
+  //       if (adminData.image) {
+  //         setProfilePic(adminData.image);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch admin:", error);
+  //     }
+  //   };
 
-    fetchAdmin();
-  }, [id]);
+  //   fetchAdmin();
+  // }, [id]);
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -102,7 +103,7 @@ const SidebarAdmin = () => {
 
   return (
     <>
-      <nav className="fixed top-0 z-50 w-full bg-gradient-to-r from-blue-600 to-indigo-500 border shadow-sm flex justify-between items-center px-3 py-3 lg:px-5 lg:pl-3">
+      <nav className="fixed top-0 z-50 w-full bg-gradient-to-r from-blue-500 to-indigo-400 border shadow-sm flex justify-between items-center px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center">
           <button
             id="sidebar-toggle"
@@ -169,6 +170,7 @@ const SidebarAdmin = () => {
                 tabIndex="-1"
                 id="user-menu-item-2"
               >
+                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                 Keluar
               </button>
             </div>
@@ -187,21 +189,10 @@ const SidebarAdmin = () => {
         <ul className="mt-6 text-xl mx-2">
           <li className="py-2 px-3 my-2 rounded cursor-pointer hover:bg-gray-200 hover:text-black">
             <Link to="/dashboard" className="flex items-center w-full">
-              <svg
+              <FontAwesomeIcon
+                icon={faTachometerAlt}
                 className="w-7 h-7 mr-2"
-                fill="none"
-                strokeWidth="20.5"
-                stroke="currentColor"
-                viewBox="0 0 576 512"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M304 240l0-223.4c0-9 7-16.6 16-16.6C443.7 0 544 100.3 544 224c0 9-7.6 16-16.6 16L304 240zM32 272C32 150.7 122.1 50.3 239 34.3c9.2-1.3 17 6.1 17 15.4L256 288 412.5 444.5c6.7 6.7 6.2 17.7-1.5 23.1C371.8 495.6 323.8 512 272 512C139.5 512 32 404.6 32 272zm526.4 16c9.3 0 16.6 7.8 15.4 17c-7.7 55.9-34.6 105.6-73.9 142.3c-6 5.6-15.4 5.2-21.2-.7L320 288l238.4 0z"
-                ></path>
-              </svg>
+              />
               <span
                 style={{ fontFamily: "Poopins", fontWeight: "bold" }}
                 className="mx-2 font-medium"
@@ -216,21 +207,7 @@ const SidebarAdmin = () => {
               onClick={toggleDropdown}
             >
               <div className="flex items-center">
-                <svg
-                  className="w-7 h-7 mr-2"
-                  fill="none"
-                  strokeWidth="10.5"
-                  stroke="currentColor"
-                  viewBox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M0 128C0 92.7 28.7 64 64 64l448 0c35.3 0 64 28.7 64 64l0 64c0 8.8-7.4 15.7-15.7 18.6C541.5 217.1 528 235 528 256s13.5 38.9 32.3 45.4c8.3 2.9 15.7 9.8 15.7 18.6l0 64c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64l0-64c0-8.8 7.4-15.7 15.7-18.6C34.5 294.9 48 277 48 256s-13.5-38.9-32.3-45.4C7.4 207.7 0 200.8 0 192l0-64z"
-                  ></path>
-                </svg>
+                <FontAwesomeIcon icon={faBoxOpen} className="w-7 h-7 mr-2" />
                 <span
                   style={{ fontFamily: "Poopins", fontWeight: "bold" }}
                   className="mx-2 font-medium"
@@ -247,24 +224,30 @@ const SidebarAdmin = () => {
               <ul className="pl-10">
                 <li
                   className={`py-2 ${
-                    isActive("/guru")
+                    isActive("/kualitassedang")
                       ? "bg-gray-100 text-black"
                       : "hover:bg-gray-200 hover:text-black"
                   }`}
                 >
-                  <Link to="/guru" className="flex items-center w-full">
-                    Kualitas Tinggi
+                  <Link
+                    to="/kualitasstandar"
+                    className="flex items-center w-full"
+                  >
+                    TKDN
                   </Link>
                 </li>
                 <li
                   className={`py-2 ${
-                    isActive("/siswa")
+                    isActive("/kualitastinggi")
                       ? "bg-gray-100 text-black"
                       : "hover:bg-gray-200 hover:text-black"
                   }`}
                 >
-                  <Link to="/siswa" className="flex items-center w-full">
-                    Kualitas Sedang
+                  <Link
+                    to="/kualitastinggi"
+                    className="flex items-center w-full"
+                  >
+                    Non TKDN
                   </Link>
                 </li>
               </ul>
@@ -277,21 +260,7 @@ const SidebarAdmin = () => {
               onClick={toggleSecondDropdown}
             >
               <div className="flex items-center">
-                <svg
-                  className="w-7 h-7 mr-2"
-                  fill="none"
-                  strokeWidth="20.5"
-                  stroke="currentColor"
-                  viewBox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2l192 0c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312l0 144c0 22.1 17.9 40 40 40l144 0c22.1 0 40-17.9 40-40l0-144c0-22.1-17.9-40-40-40l-144 0c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"
-                  ></path>
-                </svg>
+                <FontAwesomeIcon icon={faTags} className="w-7 h-7 mr-2" />
                 <span
                   style={{ fontFamily: "Poopins", fontWeight: "bold" }}
                   className="mx-2 font-medium"
@@ -314,7 +283,7 @@ const SidebarAdmin = () => {
                   }`}
                 >
                   <Link to="/kategori1" className="flex items-center w-full">
-                    Kategori 1
+                    PC
                   </Link>
                 </li>
                 <li
@@ -325,7 +294,29 @@ const SidebarAdmin = () => {
                   }`}
                 >
                   <Link to="/kategori2" className="flex items-center w-full">
-                    Kategori 2
+                    Monitor
+                  </Link>
+                </li>
+                <li
+                  className={`py-2 ${
+                    isActive("/kategori2")
+                      ? "bg-gray-100 text-black"
+                      : "hover:bg-gray-200 hover:text-black"
+                  }`}
+                >
+                  <Link to="/kategori2" className="flex items-center w-full">
+                    Laptop
+                  </Link>
+                </li>
+                <li
+                  className={`py-2 ${
+                    isActive("/kategori2")
+                      ? "bg-gray-100 text-black"
+                      : "hover:bg-gray-200 hover:text-black"
+                  }`}
+                >
+                  <Link to="/kategori2" className="flex items-center w-full">
+                    Keyboard
                   </Link>
                 </li>
               </ul>

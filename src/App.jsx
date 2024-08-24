@@ -12,6 +12,9 @@ import CardProduk from "./pages/CardProduct";
 import Login from "./components/Login";
 import DashboardAdmin from "./components/Dashboard";
 import Sidebar from "./components/Sidebar";
+import KualitasTinggi from "./pages/KualitasTinggi";
+import KualitasStandar from "./pages/KualitasStandar";
+import TambahTkdn from "./Crud/TambahTkdn";
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
         <Route path="/dashboard" element={<DashboardAdmin />} />
         <Route path="/navbar" element={<Sidebar />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/kualitastinggi" element={<KualitasTinggi />} />
+        <Route path="/kualitasstandar" element={<KualitasStandar />} />
+        <Route path="/tambahtkdn" element={<TambahTkdn />} />
       </Routes>
     </div>
   );
