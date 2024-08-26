@@ -14,7 +14,8 @@ import DashboardAdmin from "./components/Dashboard";
 import Sidebar from "./components/Sidebar";
 import KualitasTinggi from "./pages/KualitasTinggi";
 import KualitasStandar from "./pages/KualitasStandar";
-import TambahTkdn from "./Crud/TambahTkdn";
+import TambahTkdn from "./pages/TambahTkdn";
+import TambahNonTkdn from "./pages/TambahNonTkdn";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/kualitastinggi" element={<KualitasTinggi />} />
         <Route path="/kualitasstandar" element={<KualitasStandar />} />
         <Route path="/tambahtkdn" element={<TambahTkdn />} />
+        <Route path="/tambahnontkdn" element={<TambahNonTkdn />} />
       </Routes>
     </div>
   );
