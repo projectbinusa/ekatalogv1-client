@@ -2,20 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SidebarAdmin from "../components/Sidebar";
+import Swal from "sweetalert2";
+import '@fontsource/poppins';
 
 const TambahTkdn = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    namaProduk: "",
-    kategoriProduk: "",
-    deskripsiProduk: "",
-    harga: "",
-    status: "",
-  });
-  const [kategoriOptions, setKategoriOptions] = useState([]);
-  const [produkDetailOptions, setProdukDetailOptions] = useState([]);
+  const [detailProduk, setDetailProduk] = useState([]);
+  const [kategoriProduk, setKategoriProduk] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    namaProduk: "",
+    jenisProyek: "",
+    layanan: "",
+    status: "",
+    tanggal: "",
+    cashKredit: "",
+    idDetailProdukStandar: "",
+    idKategoriProduk: "",
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,19 +34,19 @@ const TambahTkdn = () => {
       })
       .then((response) => {
         if (response.data && Array.isArray(response.data.data)) {
-          setKategoriOptions(response.data.data);
+          setKategoriProduk(response.data.data);
         } else {
           console.error("Unexpected response format:", response.data);
-          setKategoriOptions([]);
+          setKategoriProduk([]);
         }
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
         setError("Failed to fetch categories.");
-        setKategoriOptions([]);
+        setKategoriProduk([]);
       });
 
-    axios
+      axios
       .get("http://localhost:7000/api/detail_produk/kualitas_standar", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -48,98 +54,83 @@ const TambahTkdn = () => {
       })
       .then((response) => {
         if (response.data && Array.isArray(response.data.data)) {
-          setProdukDetailOptions(response.data.data);
+          setDetailProduk(response.data.data);
         } else {
           console.error("Unexpected response format:", response.data);
-          setProdukDetailOptions([]);
+          setDetailProduk([]);
         }
       })
       .catch((error) => {
         console.error("Error fetching product details:", error);
         setError("Failed to fetch product details.");
-        setProdukDetailOptions([]);
+        setDetailProduk([]);
       });
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setError(null); // Clear error when user starts changing input
     setFormData({
       ...formData,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
-
-    if (name === "kategoriProduk") {
-      const selectedDetail = produkDetailOptions.find(
-        (detail) => detail.kategoriProduk === value
-      );
-
-      if (selectedDetail) {
-        setFormData((prev) => ({
-          ...prev,
-          deskripsiProduk: selectedDetail.deskripsi || "", // Default to empty if null/undefined
-          harga: selectedDetail.hargaProduk || "", // Default to empty if null/undefined
-        }));
-      } else {
-        setFormData((prev) => ({
-          ...prev,
-          deskripsiProduk: "",
-          harga: "",
-        }));
-      }
-    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setError("");
+
+    const token = localStorage.getItem("token");
+
+    const dataToSend = {
+      cashKredit: formData.cashKredit,  
+      jenisProyek: formData.jenisProyek,
+      layanan: formData.layanan,
+      namaProduk: formData.namaProduk,
+      cashKredit: formData.cashKredit,
+      status: formData.status.toLowerCase(), 
+      tanggal: formData.tanggal + "T00:00:00.000Z",
+      idDetailProdukStandar: formData.idDetailProdukStandar, 
+      idKategoriProduk: formData.idKategoriProduk,
+    };
 
     try {
-      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:7000/api/kualitas_standar/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, 
+        },
+        body: JSON.stringify(dataToSend),
+      });
 
-      // Mencari idKategoriProduk berdasarkan namaKategori yang dipilih oleh pengguna
-      const idKategoriProduk = kategoriOptions.find(
-        (kategori) => kategori.namaKategori === formData.kategoriProduk
-      )?.id;
-
-      // Validasi apakah idKategoriProduk ditemukan
-      if (!idKategoriProduk) {
-        setError(
-          "Kategori tidak valid atau tidak ditemukan. Silakan pilih kategori yang tersedia."
-        );
-        setLoading(false);
-        return;
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Response:", result);
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil',
+          text: 'Data berhasil disimpan!',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          navigate("/kualitasstandar");
+        });
+      } else {
+        console.error("Failed to submit data");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal menyimpan data!',
+          confirmButtonText: 'OK'
+        });
       }
-
-      // Membuat objek data yang akan dikirim ke backend
-      const requestData = {
-        namaProduk: formData.namaProduk,
-        idKategoriProduk: idKategoriProduk, // Menggunakan idKategoriProduk yang telah ditemukan
-        deskripsiProduk: formData.deskripsiProduk,
-        harga: formData.harga,
-        status: formData.status,
-        tanggal: new Date().toISOString(),
-      };
-
-      // Mengirim data ke backend
-      const response = await axios.post(
-        "http://localhost:7000/api/kualitas_standar/add",
-        requestData,
-        {
-          headers: {
-            accept: "*/*",
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("Data successfully added:", response.data);
-      navigate("/kualitasstandar");
     } catch (error) {
-      console.error("Error adding data:", error);
-      setError("Gagal menambahkan data. Silakan coba lagi.");
+      console.error("Error:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Terjadi kesalahan saat mengirim data!',
+        confirmButtonText: 'OK'
+      });
     } finally {
       setLoading(false);
     }
@@ -147,7 +138,7 @@ const TambahTkdn = () => {
 
   const batal = () => {
     navigate("/kualitasstandar");
-  };
+  }
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -179,22 +170,60 @@ const TambahTkdn = () => {
                   value={formData.namaProduk}
                   onChange={handleChange}
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Masukkan Nama Produk"
+                  placeholder="masukkan nama produk"
                   required
                   autoComplete="off"
                 />
               </div>
               <div className="relative">
                 <label
-                  htmlFor="kategoriProduk"
+                  htmlFor="jenisProyek"
                   className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
                 >
-                  Kategori
+                  Jenis Proyek
+                </label>
+                <input
+                  type="text"
+                  id="jenisProyek"
+                  name="jenisProyek"
+                  value={formData.jenisProyek}
+                  onChange={handleChange}
+                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="masukkan jenis proyek"
+                  required
+                  autoComplete="off"
+                />
+              </div>
+              <div className="relative">
+                <label
+                  htmlFor="layanan"
+                  className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
+                >
+                  Layanan
+                </label>
+                <input
+                  type="text"
+                  id="layanan"
+                  name="layanan"
+                  value={formData.layanan}
+                  onChange={handleChange}
+                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="masukkan layanan"
+                  required
+                  autoComplete="off"
+                />
+              </div>
+              <div className="relative">
+                <label
+                  htmlFor="idKategoriProduk"
+                  className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
+                >
+                  Kategori Produk
                 </label>
                 <select
-                  id="kategoriProduk"
-                  name="kategoriProduk"
-                  value={formData.kategoriProduk}
+                  id="idKategoriProduk"
+                  name="idKategoriProduk"
+                  value={formData.idKategoriProduk}
                   onChange={handleChange}
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
@@ -202,51 +231,37 @@ const TambahTkdn = () => {
                   <option value="" disabled>
                     Pilih Kategori
                   </option>
-                  {Array.isArray(kategoriOptions) &&
-                    kategoriOptions.map((kategori) => (
-                      <option key={kategori.id} value={kategori.namaKategori}>
-                        {kategori.namaKategori}
-                      </option>
-                    ))}
+                  {Array.isArray(kategoriProduk) && kategoriProduk.map((kategori) => (
+                    <option key={kategori.id} value={kategori.id}> 
+                      {kategori.namaKategori}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="relative">
                 <label
-                  htmlFor="deskripsiProduk"
+                  htmlFor="idDetailProdukStandar"
                   className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
                 >
-                  Deskripsi Produk
+                  Detail Produk
                 </label>
-                <input
-                  type="text"
-                  id="deskripsiProduk"
-                  name="deskripsiProduk"
-                  value={formData.deskripsiProduk}
+                <select
+                  id="idDetailProdukStandar"
+                  name="idDetailProdukStandar"
+                  value={formData.idDetailProdukStandar}
                   onChange={handleChange}
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Deskripsi Produk"
                   required
-                  autoComplete="off"
-                />
-              </div>
-              <div className="relative">
-                <label
-                  htmlFor="harga"
-                  className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
                 >
-                  Harga
-                </label>
-                <input
-                  type="text"
-                  id="harga"
-                  name="harga"
-                  value={formData.harga}
-                  onChange={handleChange}
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Masukkan Harga"
-                  required
-                  autoComplete="off"
-                />
+                  <option value="" disabled>
+                    Pilih Detail Produk
+                  </option>
+                  {Array.isArray(detailProduk) && detailProduk.map((detail) => (
+                    <option key={detail.id} value={detail.id}>
+                      {detail.deskripsi}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="relative">
                 <label
@@ -269,6 +284,46 @@ const TambahTkdn = () => {
                   <option value="Tersedia">Tersedia</option>
                   <option value="Kosong">Kosong</option>
                 </select>
+              </div>
+              <div className="relative">
+                <label
+                  htmlFor="cashKredit"
+                  className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
+                >
+                  Cash Kredit
+                </label>
+                <select
+                  id="cashKredit"
+                  name="cashKredit"
+                  value={formData.cashKredit}
+                  onChange={handleChange}
+                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                >
+                  <option value="" disabled>
+                    Pilih
+                  </option>
+                  <option value="Cash">Cash</option>
+                  <option value="Kredit">Kredit</option>
+                </select>
+              </div>
+              <div className="relative">
+                <label
+                  htmlFor="tanggal"
+                  className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
+                >
+                  Tanggal
+                </label>
+                <input
+                  type="date"
+                  id="tanggal"
+                  name="tanggal"
+                  value={formData.tanggal}
+                  onChange={handleChange}
+                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                  autoComplete="off"
+                />
               </div>
             </div>
             {error && <p className="text-red-500 mt-2">{error}</p>}
