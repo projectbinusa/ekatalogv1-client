@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import SidebarAdmin from "../components/Sidebar";
 import axios from "axios";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import '@fontsource/poppins';
+import { Link } from "react-router-dom"; 
 
 const KualitasTinggi = () => {
   const [products, setProducts] = useState([]);
@@ -41,14 +43,13 @@ const KualitasTinggi = () => {
         >
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-semibold text-gray-800">
-              Data Non TKND
+              Data Non TKDN
             </h1>
-            <button className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center">
-              <FontAwesomeIcon icon={faPlus} className="mr-5" />
-              <a href="/tambahnontkdn" className="text-white no-underline">
-                Tambah Data
-              </a>
-            </button>
+            <Link to="/tambahnontkdn">
+              <button className="bg-green-500 text-white p-2 rounded-lg flex items-center justify-center">
+                <FontAwesomeIcon icon={faPlus} className="text-xl" />
+              </button>
+            </Link>
           </div>
 
           <div className="mt-9 overflow-x-auto border border-gray-200 rounded-lg shadow-lg">
@@ -85,12 +86,12 @@ const KualitasTinggi = () => {
                       {p.detailProdukKualitasTinggi.hargaProduk}
                     </td>
                     <td className="py-3 px-6">{p.status}</td>
-                    <td className="py-3 px-6">
-                      <button className="bg-blue-500 text-white py-1 px-3 rounded mr-2">
-                        Edit
+                    <td className="py-3 px-6 flex space-x-2">
+                      <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
+                        <FontAwesomeIcon icon={faEdit} className="text-xl" />
                       </button>
-                      <button className="bg-red-500 text-white py-1 px-3 rounded">
-                        Delete
+                      <button className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center">
+                        <FontAwesomeIcon icon={faTrash} className="text-xl" />
                       </button>
                     </td>
                   </tr>

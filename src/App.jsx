@@ -1,4 +1,5 @@
 import React from "react";
+import './index.css';
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import TKDN from "./pages/Tkdn";

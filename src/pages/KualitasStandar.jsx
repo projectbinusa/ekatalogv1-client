@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SidebarAdmin from "../components/Sidebar";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import '@fontsource/poppins';
+import { Link } from "react-router-dom"; 
 
 const KualitasStandar = () => {
   const [products, setProducts] = useState([]);
@@ -29,10 +31,6 @@ const KualitasStandar = () => {
     fetchKualitasStandar();
   }, []);
 
-  // const handleTambahData = () => {
-  //   window.location.href = "/tambahtkdn"; // Redirect to the "Tambah Data" page
-  // };
-
   return (
     <div className="min-h-screen flex sm:flex-row">
       <div className="sidebar w-full md:w-64 bg-gray-100 shadow-lg">
@@ -44,13 +42,12 @@ const KualitasStandar = () => {
           className="my-10 bg-white border border-gray-200 md:mt-20 mt-10 rounded-xl shadow-lg p-6"
         >
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-semibold text-gray-800">Data TKND</h1>
-            <button className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center">
-              <FontAwesomeIcon icon={faPlus} className="mr-5" />
-              <a href="/tambahtkdn" className="text-white no-underline">
-                Tambah Data
-              </a>
-            </button>
+            <h1 className="text-3xl font-semibold text-gray-800">Data TKDN</h1>
+            <Link to="/tambahtkdn">
+              <button className="bg-green-500 text-white p-2 rounded-lg flex items-center justify-center">
+                <FontAwesomeIcon icon={faPlus} className="text-xl" />
+              </button>
+            </Link>
           </div>
 
           <div className="mt-9 overflow-x-auto border border-gray-200 rounded-lg shadow-lg">
@@ -81,10 +78,12 @@ const KualitasStandar = () => {
                       {product.detailProdukKualitasStandar.hargaProduk}
                     </td>
                     <td className="py-3 px-6">{product.status}</td>
-                    <td className="py-3 px-6">
-                      {/* Add any action buttons here */}
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded">
-                        Edit
+                    <td className="py-3 px-6 flex space-x-2">
+                      <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
+                        <FontAwesomeIcon icon={faEdit} className="text-xl" />
+                      </button>
+                      <button className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center">
+                        <FontAwesomeIcon icon={faTrash} className="text-xl" />
                       </button>
                     </td>
                   </tr>
