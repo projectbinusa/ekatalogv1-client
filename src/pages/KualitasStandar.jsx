@@ -5,6 +5,7 @@ import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '@fontsource/poppins';
 import { Link } from "react-router-dom"; 
+import Swal from 'sweetalert2';
 
 const KualitasStandar = () => {
   const [products, setProducts] = useState([]);
@@ -31,16 +32,52 @@ const KualitasStandar = () => {
     fetchKualitasStandar();
   }, []);
 
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: "Data ini akan dihapus dan tidak bisa dipulihkan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Batal'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:7000/api/kualitas_standar/${id}`, {
+          headers: {
+            accept: "*/*",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
+        Swal.fire(
+          'Terhapus!',
+          'Produk telah berhasil dihapus.',
+          'success'
+        );
+
+        setProducts(products.filter(product => product.id !== id));
+      } catch (error) {
+        console.error("Error deleting data:", error);
+        Swal.fire(
+          'Gagal!',
+          'Ada masalah saat menghapus produk.',
+          'error'
+        );
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen flex sm:flex-row">
-      <div className="sidebar w-full md:w-64 bg-gray-100 shadow-lg">
+    <div className="min-h-screen flex flex-col md:flex-row">
+      <div className="sidebar w-full md:w-64 bg-gray-100 shadow-lg md:fixed">
         <SidebarAdmin />
       </div>
-      <div className="flex-1 p-4">
-        <div
-          style={{ backgroundColor: "white" }}
-          className="my-10 bg-white border border-gray-200 md:mt-20 mt-10 rounded-xl shadow-lg p-6"
-        >
+      <div className="flex-1 p-4 md:ml-64 mt-4 md:mt-0">
+        <div className="bg-white border border-gray-200 mt-10 md:mt-20 rounded-xl shadow-lg p-6">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-semibold text-gray-800">Data TKDN</h1>
             <Link to="/tambahtkdn">
@@ -78,11 +115,16 @@ const KualitasStandar = () => {
                       {product.detailProdukKualitasStandar.hargaProduk}
                     </td>
                     <td className="py-3 px-6">{product.status}</td>
-                    <td className="py-3 px-6 flex space-x-2">
-                      <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
-                        <FontAwesomeIcon icon={faEdit} className="text-xl" />
-                      </button>
-                      <button className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center">
+                    <td className="py-3 px-6 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+                      <Link to={`/updatetkdn/${product.id}`}>
+                        <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
+                          <FontAwesomeIcon icon={faEdit} className="text-xl" />
+                        </button>
+                      </Link>
+                      <button 
+                        className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center"
+                        onClick={() => handleDelete(product.id)}
+                      >
                         <FontAwesomeIcon icon={faTrash} className="text-xl" />
                       </button>
                     </td>

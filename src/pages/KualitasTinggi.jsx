@@ -5,6 +5,7 @@ import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '@fontsource/poppins';
 import { Link } from "react-router-dom"; 
+import Swal from 'sweetalert2';
 
 const KualitasTinggi = () => {
   const [products, setProducts] = useState([]);
@@ -30,6 +31,45 @@ const KualitasTinggi = () => {
 
     fetchKualitasStandar();
   }, []);
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: "Data ini akan dihapus dan tidak bisa dipulihkan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Batal'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:7000/api/kualitas_tinggi/${id}`, {
+          headers: {
+            accept: "*/*",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
+        Swal.fire(
+          'Terhapus!',
+          'Produk telah berhasil dihapus.',
+          'success'
+        );
+
+        setProducts(products.filter(product => product.id !== id));
+      } catch (error) {
+        console.error("Error deleting data:", error);
+        Swal.fire(
+          'Gagal!',
+          'Ada masalah saat menghapus produk.',
+          'error'
+        );
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen flex sm:flex-row">
@@ -87,10 +127,15 @@ const KualitasTinggi = () => {
                     </td>
                     <td className="py-3 px-6">{p.status}</td>
                     <td className="py-3 px-6 flex space-x-2">
-                      <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
-                        <FontAwesomeIcon icon={faEdit} className="text-xl" />
-                      </button>
-                      <button className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center">
+                      <Link to={`/updatenontkdn/${p.id}`}>
+                        <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
+                          <FontAwesomeIcon icon={faEdit} className="text-xl" />
+                        </button>
+                      </Link>
+                      <button 
+                        className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center"
+                        onClick={() => handleDelete(p.id)}  
+                      >
                         <FontAwesomeIcon icon={faTrash} className="text-xl" />
                       </button>
                     </td>
