@@ -17,6 +17,8 @@ import KualitasTinggi from "./pages/KualitasTinggi";
 import KualitasStandar from "./pages/KualitasStandar";
 import TambahTkdn from "./pages/TambahTkdn";
 import TambahNonTkdn from "./pages/TambahNonTkdn";
+import EditTkdn from "./pages/EditTkdn";
+import EditNonTkdn from "./pages/EditNonTkdn";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
         <Route path="/kualitasstandar" element={<KualitasStandar />} />
         <Route path="/tambahtkdn" element={<TambahTkdn />} />
         <Route path="/tambahnontkdn" element={<TambahNonTkdn />} />
+        <Route path="/updatetkdn/:id" element={<EditTkdn />} />
+        <Route path="updatenontkdn/:id" element={<EditNonTkdn/>}/>
       </Routes>
     </div>
   );
