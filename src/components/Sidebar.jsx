@@ -25,21 +25,6 @@ const SidebarAdmin = () => {
     "https://kimia.fkip.usk.ac.id/wp-content/uploads/2017/10/1946429.png"
   );
 
-  // useEffect(() => {
-  //   const fetchAdmin = async () => {
-  //     try {
-  //       const adminData = await pengguna(id);
-  //       if (adminData.image) {
-  //         setProfilePic(adminData.image);
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to fetch admin:", error);
-  //     }
-  //   };
-
-  //   fetchAdmin();
-  // }, [id]);
-
   const isActive = (path) => {
     return location.pathname === path;
   };
@@ -153,7 +138,7 @@ const SidebarAdmin = () => {
               aria-labelledby="user-menu-button"
               tabIndex="-1"
             >
-              <Link to="/profile_admin">
+              <Link to="#">
                 <button
                   className="block px-4 py-2 text-sm"
                   role="menuitem"
@@ -170,7 +155,6 @@ const SidebarAdmin = () => {
                 tabIndex="-1"
                 id="user-menu-item-2"
               >
-                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                 Keluar
               </button>
             </div>
@@ -277,12 +261,12 @@ const SidebarAdmin = () => {
               <ul className="pl-10">
                 <li
                   className={`py-2 ${
-                    isActive("/kategori1")
+                    isActive("/listproduct")
                       ? "bg-gray-100 text-black"
                       : "hover:bg-gray-200 hover:text-black"
                   }`}
                 >
-                  <Link to="/kategori1" className="flex items-center w-full">
+                  <Link to="/listproduct" className="flex items-center w-full">
                     PC
                   </Link>
                 </li>
