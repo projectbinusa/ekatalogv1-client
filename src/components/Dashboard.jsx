@@ -1,21 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SidebarAdmin from "./Sidebar";
 
 const DashboardAdmin = () => {
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchSiswa = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:7000/pengguna/all");
-  //       setSiswa(response.data.reverse());
-  //     } catch (error) {
-  //       console.error("Failed to fetch siswa: ", error);
-  //     }
-  //   };
-  //   fetchSiswa();
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+    } else {
+      axios
+        .get("http://localhost:7000/api/pengguna", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          setUsername(response.data.usernamePengguna);
+        })
+        .catch((error) => {
+          console.error("Token tidak valid: ", error);
+          localStorage.removeItem("token");
+          navigate("/login");
+        });
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row">

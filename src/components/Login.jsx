@@ -14,7 +14,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [role, setRole] = useState("admin");
 
-  const navigate = useNavigate(); // Hook untuk navigasi
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,11 +42,10 @@ const Login = () => {
         const userData = response.data.data.userData;
 
         // Simpan data ke localStorage
-        localStorage.setItem("id", userData.idPengguna); // Perbarui dengan nama properti yang benar
-        localStorage.setItem("role", userData.rolePengguna); // Perbarui dengan nama properti yang benar
+        localStorage.setItem("id", userData.idPengguna);
+        localStorage.setItem("role", userData.rolePengguna);
         localStorage.setItem("token", response.data.data.token);
 
-        // Redirect menggunakan navigate
         setTimeout(() => {
           navigate("/dashboard");
         }, 1500);

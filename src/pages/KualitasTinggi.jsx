@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
 import SidebarAdmin from "../components/Sidebar";
 import axios from "axios";
-import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faEdit,
+  faPlus,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '@fontsource/poppins';
-import { Link } from "react-router-dom"; 
-import Swal from 'sweetalert2';
+import "@fontsource/poppins";
+import { Link } from "react-router-dom";
 
 const KualitasTinggi = () => {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const token = localStorage.getItem("token");
+  const pageSize = 5;
 
   useEffect(() => {
     const fetchKualitasStandar = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/api/kualitas_tinggi",
+          `http://localhost:7000/api/kualitas_tinggi/pagination?page=${currentPage}&size=${pageSize}`,
           {
             headers: {
               accept: "*/*",
@@ -23,52 +31,18 @@ const KualitasTinggi = () => {
             },
           }
         );
-        setProducts(response.data.data);
+        setProducts(response.data.data.content);
+        setTotalPages(response.data.pagination.totalPages);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchKualitasStandar();
-  }, []);
+  }, [currentPage]);
 
-  const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: 'Apakah Anda yakin?',
-      text: "Data ini akan dihapus dan tidak bisa dipulihkan!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Hapus',
-      cancelButtonText: 'Batal'
-    });
-
-    if (result.isConfirmed) {
-      try {
-        await axios.delete(`http://localhost:7000/api/kualitas_tinggi/${id}`, {
-          headers: {
-            accept: "*/*",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        
-        Swal.fire(
-          'Terhapus!',
-          'Produk telah berhasil dihapus.',
-          'success'
-        );
-
-        setProducts(products.filter(product => product.id !== id));
-      } catch (error) {
-        console.error("Error deleting data:", error);
-        Swal.fire(
-          'Gagal!',
-          'Ada masalah saat menghapus produk.',
-          'error'
-        );
-      }
-    }
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -114,7 +88,9 @@ const KualitasTinggi = () => {
                     key={p.id}
                     className="border-b border-gray-300 hover:bg-gray-100"
                   >
-                    <td className="py-3 px-6">{index + 1}</td>
+                    <td className="py-3 px-6">
+                      {index + 1 + currentPage * pageSize}
+                    </td>
                     <td className="py-3 px-6">{p.namaProduk}</td>
                     <td className="py-3 px-6">
                       {p.kategoriProduk.namaKategori}
@@ -127,15 +103,10 @@ const KualitasTinggi = () => {
                     </td>
                     <td className="py-3 px-6">{p.status}</td>
                     <td className="py-3 px-6 flex space-x-2">
-                      <Link to={`/updatenontkdn/${p.id}`}>
-                        <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
-                          <FontAwesomeIcon icon={faEdit} className="text-xl" />
-                        </button>
-                      </Link>
-                      <button 
-                        className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center"
-                        onClick={() => handleDelete(p.id)}  
-                      >
+                      <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
+                        <FontAwesomeIcon icon={faEdit} className="text-xl" />
+                      </button>
+                      <button className="bg-red-500 text-white p-2 rounded-lg flex items-center justify-center">
                         <FontAwesomeIcon icon={faTrash} className="text-xl" />
                       </button>
                     </td>
@@ -143,6 +114,25 @@ const KualitasTinggi = () => {
                 ))}
               </tbody>
             </table>
+            <div className="flex justify-center items-center mt-4">
+              <button
+                className="bg-gray-300 text-gray-600 px-4 py-2 rounded"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 0}
+              >
+                <FontAwesomeIcon icon={faAngleLeft} />
+              </button>
+              <span>
+                Page {currentPage + 1} of {totalPages}
+              </span>
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage + 1 >= totalPages}
+              >
+                <FontAwesomeIcon icon={faAngleRight} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
