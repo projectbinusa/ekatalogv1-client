@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import SidebarAdmin from "../components/Sidebar";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import '@fontsource/poppins';
+import SidebarAdmin from "../../components/Sidebar";
 
-const TambahTkdn = () => {
+const TambahNonTkdn = () => {
   const [detailProduk, setDetailProduk] = useState([]);
   const [kategoriProduk, setKategoriProduk] = useState([]);
   const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ const TambahTkdn = () => {
     status: "",
     tanggal: "",
     cashKredit: "",
-    idDetailProdukStandar: "",
+    idDetailProdukTinggi: "",
     idKategoriProduk: "",
   });
 
@@ -47,7 +47,7 @@ const TambahTkdn = () => {
       });
 
       axios
-      .get("http://localhost:7000/api/detail_produk/kualitas_standar", {
+      .get("http://localhost:7000/api/detail_produk/kualitas_tinggi", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -89,12 +89,12 @@ const TambahTkdn = () => {
       cashKredit: formData.cashKredit,
       status: formData.status.toLowerCase(), 
       tanggal: formData.tanggal + "T00:00:00.000Z",
-      idDetailProdukStandar: formData.idDetailProdukStandar, 
+      idDetailProdukTinggi: formData.idDetailProdukTinggi, 
       idKategoriProduk: formData.idKategoriProduk,
     };
 
     try {
-      const response = await fetch("http://localhost:7000/api/kualitas_standar/add", {
+      const response = await fetch("http://localhost:7000/api/kualitas_tinggi/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,14 +105,21 @@ const TambahTkdn = () => {
 
       if (response.ok) {
         const result = await response.json();
+        const idBaru = result.data.id;
         console.log("Response:", result);
         Swal.fire({
           icon: 'success',
           title: 'Berhasil',
-          text: 'Data berhasil disimpan!',
-          confirmButtonText: 'OK'
-        }).then(() => {
-          navigate("/kualitasstandar");
+          text: 'Data berhasil disimpan!, Silahkan upload gambar untuk menambah gambar',
+          showCancelButton: true,
+          confirmButtonText: 'Upload Gambar',
+          cancelButtonText: 'Kembali',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate(`/uploadimagenontkdn/${idBaru}`); 
+          } else {
+            navigate("/kualitastinggi");
+          }
         });
       } else {
         console.error("Failed to submit data");
@@ -125,20 +132,20 @@ const TambahTkdn = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Terjadi kesalahan saat mengirim data!',
-        confirmButtonText: 'OK'
-      });
+       Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Terjadi kesalahan saat mengirim data!',
+      confirmButtonText: 'OK'
+    });
     } finally {
       setLoading(false);
     }
   };
 
   const batal = () => {
-    navigate("/kualitasstandar");
-  }
+    navigate("/kualitastinggi");
+  };
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -146,13 +153,13 @@ const TambahTkdn = () => {
         <SidebarAdmin />
       </div>
       <div className="content-page max-h-screen container p-8 min-h-screen">
-        <h1 className="judul text-3xl font-semibold">Tambah Tkdn</h1>
+        <h1 className="judul text-3xl font-semibold">Tambah Non Tkdn</h1>
         <div
           style={{ backgroundColor: "white" }}
           className="add-guru mt-12 md:mt-11 bg-white p-5 mr-0 md:ml-8 border border-gray-200 rounded-xl shadow-lg"
         >
           <p className="text-lg sm:text-xl text-black font-medium mb-4 sm:mb-7">
-            Tambah Tkdn
+            Tambah Non Tkdn
           </p>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-2">
@@ -240,15 +247,15 @@ const TambahTkdn = () => {
               </div>
               <div className="relative">
                 <label
-                  htmlFor="idDetailProdukStandar"
+                  htmlFor="idDetailProdukTinggi"
                   className="block mb-2 text-sm sm:text-sm font-medium text-gray-900"
                 >
                   Detail Produk
                 </label>
                 <select
-                  id="idDetailProdukStandar"
-                  name="idDetailProdukStandar"
-                  value={formData.idDetailProdukStandar}
+                  id="idDetailProdukTinggi"
+                  name="idDetailProdukTinggi"
+                  value={formData.idDetailProdukTinggi}
                   onChange={handleChange}
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
@@ -352,4 +359,4 @@ const TambahTkdn = () => {
   );
 };
 
-export default TambahTkdn;
+export default TambahNonTkdn;
