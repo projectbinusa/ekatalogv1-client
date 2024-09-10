@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import SidebarAdmin from "../components/Sidebar";
 import '@fontsource/poppins';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import SidebarAdmin from "../../components/Sidebar";
 
 const EditNonTkdn = () => {
     const { id } = useParams(); 

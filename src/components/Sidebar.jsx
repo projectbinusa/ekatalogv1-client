@@ -261,45 +261,45 @@ const SidebarAdmin = () => {
               <ul className="pl-10">
                 <li
                   className={`py-2 ${
-                    isActive("/listproduct")
+                    isActive("/listpc")
                       ? "bg-gray-100 text-black"
                       : "hover:bg-gray-200 hover:text-black"
                   }`}
                 >
-                  <Link to="/listproduct" className="flex items-center w-full">
+                  <Link to="/listpc" className="flex items-center w-full">
                     PC
                   </Link>
                 </li>
                 <li
                   className={`py-2 ${
-                    isActive("/kategori2")
+                    isActive("/listmonitor")
                       ? "bg-gray-100 text-black"
                       : "hover:bg-gray-200 hover:text-black"
                   }`}
                 >
-                  <Link to="/kategori2" className="flex items-center w-full">
+                  <Link to="/listmonitor" className="flex items-center w-full">
                     Monitor
                   </Link>
                 </li>
                 <li
                   className={`py-2 ${
-                    isActive("/kategori2")
+                    isActive("/listlaptop")
                       ? "bg-gray-100 text-black"
                       : "hover:bg-gray-200 hover:text-black"
                   }`}
                 >
-                  <Link to="/kategori2" className="flex items-center w-full">
+                  <Link to="/listlaptop" className="flex items-center w-full">
                     Laptop
                   </Link>
                 </li>
                 <li
                   className={`py-2 ${
-                    isActive("/kategori2")
+                    isActive("/listkeyboard")
                       ? "bg-gray-100 text-black"
                       : "hover:bg-gray-200 hover:text-black"
                   }`}
                 >
-                  <Link to="/kategori2" className="flex items-center w-full">
+                  <Link to="/listkeyboard" className="flex items-center w-full">
                     Keyboard
                   </Link>
                 </li>

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import SidebarAdmin from "../components/Sidebar";
 import {
   faAngleLeft,
   faAngleRight,
   faEdit,
   faPlus,
   faTrash,
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@fontsource/poppins";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import SidebarAdmin from "../../components/Sidebar";
 
 const KualitasStandar = () => {
   const [products, setProducts] = useState([]);
@@ -131,6 +132,11 @@ const KualitasStandar = () => {
                     </td>
                     <td className="py-3 px-6">{product.status}</td>
                     <td className="py-3 px-6 flex space-x-2">
+                      <Link to={`/detailtkdn/${product.id}`}>
+                        <button className="bg-gray-500 text-white p-2 rounded-lg flex items-center justify-center">
+                          <FontAwesomeIcon icon={faInfoCircle} className="text-xl" />
+                        </button>
+                      </Link>
                       <Link to={`/updatetkdn/${product.id}`}>
                         <button className="bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center">
                           <FontAwesomeIcon icon={faEdit} className="text-xl" />

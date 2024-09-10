@@ -13,12 +13,20 @@ import CardProduk from "./pages/CardProduct";
 import Login from "./components/Login";
 import DashboardAdmin from "./components/Dashboard";
 import Sidebar from "./components/Sidebar";
-import KualitasTinggi from "./pages/KualitasTinggi";
-import KualitasStandar from "./pages/KualitasStandar";
-import TambahTkdn from "./pages/TambahTkdn";
-import TambahNonTkdn from "./pages/TambahNonTkdn";
-import EditTkdn from "./pages/EditTkdn";
-import EditNonTkdn from "./pages/EditNonTkdn";
+import KualitasStandar from "./pages/tkdn/KualitasStandar";
+import TambahTkdn from "./pages/tkdn/TambahTkdn";
+import UploadImageTkdn from "./pages/tkdn/UploadImageTkdn";
+import EditTkdn from "./pages/tkdn/EditTkdn";
+import KualitasTinggi from "./pages/non_tkdn/KualitasTinggi";
+import TambahNonTkdn from "./pages/non_tkdn/TambahNonTkdn";
+import UploadImageNonTkdn from "./pages/non_tkdn/UploadImageNonTkdn";
+import EditNonTkdn from "./pages/non_tkdn/EditNonTkdn";
+import DetailPage from "./pages/non_tkdn/DetailProdukNonTkdn";
+import DetailProdukTkdn from "./pages/tkdn/DetailProdukTkdn";
+import ListByKeyboard from "./pages/listProduk/ListByKeyboard";
+import ListByMonitor from "./pages/listProduk/ListByMonitor";
+import ListByPc from "./pages/listProduk/ListByPc";
+import ListByLaptop from "./pages/listProduk/ListByLaptop";
 
 function App() {
   return (
@@ -41,7 +49,15 @@ function App() {
         <Route path="/tambahtkdn" element={<TambahTkdn />} />
         <Route path="/tambahnontkdn" element={<TambahNonTkdn />} />
         <Route path="/updatetkdn/:id" element={<EditTkdn />} />
-        <Route path="updatenontkdn/:id" element={<EditNonTkdn/>}/>
+        <Route path="/updatenontkdn/:id" element={<EditNonTkdn />} />
+        <Route path="/uploadimagetkdn/:id" element={<UploadImageTkdn />} />
+        <Route path="/uploadimagenontkdn/:id" element={<UploadImageNonTkdn />} />
+        <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="/detailtkdn/:id" element={<DetailProdukTkdn />} />
+        <Route path="/listpc" element={<ListByPc />} />
+        <Route path="/listlaptop" element={<ListByLaptop />} />
+        <Route path="/listmonitor" element={<ListByMonitor />} />
+        <Route path="/listkeyboard" element={<ListByKeyboard />} />
       </Routes>
     </div>
   );
