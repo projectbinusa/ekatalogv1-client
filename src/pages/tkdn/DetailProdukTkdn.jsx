@@ -70,12 +70,9 @@ const DetailProdukTkdn = () => {
                                 <p><strong>Status:</strong> {qualityStandar.status}</p>
                                 <p><strong>Layanan:</strong> {qualityStandar.layanan}</p>
                                 <p><strong>Jenis Proyek:</strong> {qualityStandar.jenisProyek}</p>
-                                <p><strong>Cash/Kredit:</strong> {qualityStandar.cashKredit}</p>
                                 <p><strong>Deskripsi:</strong> {qualityStandar.detailProdukKualitasStandar.deskripsi}</p>
                                 <p><strong>Kategori:</strong> {qualityStandar.kategoriProduk.namaKategori}</p>
-                                <p><strong>Stok:</strong> {qualityStandar.detailProdukKualitasStandar.stokProduk}</p>
                                 <p><strong>Harga:</strong> {qualityStandar.detailProdukKualitasStandar.hargaProduk}</p>
-                                <p><strong>Tanggal:</strong> {qualityStandar.tanggal}</p>
                             </div>
                         )}
                     </div>
