@@ -102,13 +102,27 @@ const KualitasStandar = () => {
             <table className="min-w-full bg-white divide-y-2 divide-gray-200 table-fixed rounded-xl">
               <thead>
                 <tr className="bg-gray-200 text-gray-900 text-sm sm:text-base leading-normal">
-                  <th className="py-3 px-6 text-left">No</th>
-                  <th className="py-3 px-6 text-left">Nama Produk</th>
-                  <th className="py-3 px-6 text-left">Kategori</th>
-                  <th className="py-3 px-6 text-left">Deskripsi Produk</th>
-                  <th className="py-3 px-6 text-left">Harga</th>
-                  <th className="py-3 px-6 text-left">Status</th>
-                  <th className="py-3 px-6 text-left">Aksi</th>
+                  <th className="py-3 px-6 text-left">
+                    No
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Nama Produk
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Kategori
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Deskripsi Produk
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Harga
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Status
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Aksi
+                  </th>
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm sm:text-base font-normal">

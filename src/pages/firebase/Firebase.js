@@ -1,15 +1,19 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from 'firebase/storage';
+// import { getAnalytics } from "firebase/analytics";
 
-const serviceAccountKey = {
-  apiKey: "AIzaSyAhAssmUfBHwwMJnNki9wt645wsb8nrDuY",
-  authDomain: "e-katalog-cd566.firebaseapp.com",
-  projectId: "e-katalog-cd566",
-  storageBucket: "e-katalog-cd566.appspot.com",
-  messagingSenderId: "1089617816931",
-  appId: "1:1089617816931:web:b7b25f17453d8abd367756"
+const firebaseConfig = {
+  apiKey: "AIzaSyDt6KVVdJSi_PfaMnlwKbC36O2GeH46CE4",
+  authDomain: "e-katalogv1.firebaseapp.com",
+  databaseURL: "https://e-katalogv1-default-rtdb.firebaseio.com",
+  projectId: "e-katalogv1",
+  storageBucket: "e-katalogv1.appspot.com",
+  messagingSenderId: "385147362361",
+  appId: "1:385147362361:web:672d8a07f424d5da3841e8",
+  measurementId: "G-L95JBH9LFG"
 };
 
 // Initialize Firebase
-const app = initializeApp(serviceAccountKey);
+const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
+// const analytics = getAnalytics(app);
