@@ -82,6 +82,8 @@ const KualitasTinggi = () => {
       <div className="sidebar w-full md:w-64 bg-gray-100 shadow-lg">
         <SidebarAdmin />
       </div>
+
+      {/* Main Content */}
       <div className="flex-1 p-4">
         <div
           style={{ backgroundColor: "white" }}
@@ -102,13 +104,27 @@ const KualitasTinggi = () => {
             <table className="min-w-full bg-white divide-y-2 divide-gray-200 table-fixed rounded-xl">
               <thead>
                 <tr className="bg-gray-200 text-gray-900 text-sm sm:text-base leading-normal">
-                  <th className="py-3 px-6 text-left">No</th>
-                  <th className="py-3 px-6 text-left">Nama Produk</th>
-                  <th className="py-3 px-6 text-left">Kategori</th>
-                  <th className="py-3 px-6 text-left">Deskripsi Produk</th>
-                  <th className="py-3 px-6 text-left">Harga</th>
-                  <th className="py-3 px-6 text-left">Status</th>
-                  <th className="py-3 px-6 text-left">Aksi</th>
+                  <th className="py-3 px-6 text-left">
+                    No
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Nama Produk
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Kategori
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Deskripsi Produk
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Harga
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Status
+                  </th>
+                  <th className="py-3 px-6 text-left">
+                    Aksi
+                  </th>
                 </tr>
               </thead>
               <tbody

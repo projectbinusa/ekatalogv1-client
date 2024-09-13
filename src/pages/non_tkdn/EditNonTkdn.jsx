@@ -103,6 +103,8 @@ const EditNonTkdn = () => {
           <div className="sidebar w-full md:w-64">
             <SidebarAdmin />
           </div>
+          
+          {/* Main Content */}
           <div className="content-page max-h-screen container p-8 min-h-screen">
             <h1 className="judul text-3xl font-semibold">Update Non Tkdn</h1>
             <div
