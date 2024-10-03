@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../firebase/Firebase";
+// import { getDownloadURL, ref } from "firebase/storage";
+// import { storage } from "../firebase/Firebase";
 import SidebarAdmin from "../../components/Sidebar";
 
 const DetailPage = () => {
@@ -22,14 +22,14 @@ const DetailPage = () => {
                     });
                     console.log("Data dari API:", response.data);
                     const productData = response.data.data;
-                    const imagePath = productData.image; 
-                    const imageRef = ref(storage, imagePath);
-                    console.log("Path gambar Firebase:", imagePath);
+                    // const imagePath = productData.image; 
+                    // const imageRef = ref(storage, imagePath);
+                    // console.log("Path gambar Firebase:", imagePath);
                     
-                    const imageUrl = await getDownloadURL(imageRef);
-                    console.log("URL gambar:", imageUrl);
+                    // const imageUrl = await getDownloadURL(imageRef);
+                    // console.log("URL gambar:", imageUrl);
 
-                    setQualityTinggi({ ...productData, image: imageUrl });
+                    setQualityTinggi({ ...productData /*, image: imageUrl */ });
                 } catch (error) {
                     console.error("Error fetching product details: ", error);
                 }
@@ -62,21 +62,18 @@ const DetailPage = () => {
                     <div className="p-4 border-t border-gray-300 mx-auto">
                         {qualityTinggi && (
                             <div>
-                                <img
-                                    src={qualityTinggi.image}
+                                {/* <img
+                                    // src={qualityTinggi.image}
                                     alt={qualityTinggi.namaProduk}
                                     className="w-32 h-32 object-cover mb-2 mx-auto"
-                                />
+                                /> */}
                                 <p><strong>Nama Produk:</strong> {qualityTinggi.namaProduk}</p>
                                 <p><strong>Status:</strong> {qualityTinggi.status}</p>
                                 <p><strong>Layanan:</strong> {qualityTinggi.layanan}</p>
                                 <p><strong>Jenis Proyek:</strong> {qualityTinggi.jenisProyek}</p>
-                                <p><strong>Cash/Kredit:</strong> {qualityTinggi.cashKredit}</p>
                                 <p><strong>Deskripsi:</strong> {qualityTinggi.detailProdukKualitasTinggi.deskripsi}</p>
                                 <p><strong>Kategori:</strong> {qualityTinggi.kategoriProduk.namaKategori}</p>
-                                <p><strong>Stok:</strong> {qualityTinggi.detailProdukKualitasTinggi.stokProduk}</p>
                                 <p><strong>Harga:</strong> {qualityTinggi.detailProdukKualitasTinggi.hargaProduk}</p>
-                                <p><strong>Tanggal:</strong> {qualityTinggi.tanggal}</p>
                             </div>
                         )}
                     </div>

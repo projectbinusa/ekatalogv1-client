@@ -110,16 +110,10 @@ const TambahNonTkdn = () => {
         Swal.fire({
           icon: 'success',
           title: 'Berhasil',
-          text: 'Data berhasil disimpan!, Silahkan upload gambar untuk menambah gambar',
-          showCancelButton: true,
-          confirmButtonText: 'Upload Gambar',
-          cancelButtonText: 'Kembali',
+          text: 'Data berhasil disimpan!',
+          confirmButtonText: 'OK'
         }).then((result) => {
-          if (result.isConfirmed) {
-            navigate(`/uploadimagenontkdn/${idBaru}`); 
-          } else {
-            navigate("/kualitastinggi");
-          }
+          navigate("/kualitasstandar");
         });
       } else {
         console.error("Failed to submit data");

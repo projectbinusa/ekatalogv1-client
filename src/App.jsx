@@ -15,11 +15,11 @@ import DashboardAdmin from "./components/Dashboard";
 import Sidebar from "./components/Sidebar";
 import KualitasStandar from "./pages/tkdn/KualitasStandar";
 import TambahTkdn from "./pages/tkdn/TambahTkdn";
-import UploadImageTkdn from "./pages/tkdn/UploadImageTkdn";
+// import UploadImageTkdn from "./pages/tkdn/UploadImageTkdn";
 import EditTkdn from "./pages/tkdn/EditTkdn";
 import KualitasTinggi from "./pages/non_tkdn/KualitasTinggi";
 import TambahNonTkdn from "./pages/non_tkdn/TambahNonTkdn";
-import UploadImageNonTkdn from "./pages/non_tkdn/UploadImageNonTkdn";
+// import UploadImageNonTkdn from "./pages/non_tkdn/UploadImageNonTkdn";
 import EditNonTkdn from "./pages/non_tkdn/EditNonTkdn";
 import DetailPage from "./pages/non_tkdn/DetailProdukNonTkdn";
 import DetailProdukTkdn from "./pages/tkdn/DetailProdukTkdn";
@@ -27,6 +27,9 @@ import ListByKeyboard from "./pages/listProduk/ListByKeyboard";
 import ListByMonitor from "./pages/listProduk/ListByMonitor";
 import ListByPc from "./pages/listProduk/ListByPc";
 import ListByLaptop from "./pages/listProduk/ListByLaptop";
+import TambahKategori from "./pages/page_tambah/TambahKategori";
+import TambahDetailNonTkdn from "./pages/page_tambah/TambahDetailNonTkdn";
+import TambahDetailTkdn from "./pages/page_tambah/TambahDetailTkdn";
 
 function App() {
   return (
@@ -50,14 +53,17 @@ function App() {
         <Route path="/tambahnontkdn" element={<TambahNonTkdn />} />
         <Route path="/updatetkdn/:id" element={<EditTkdn />} />
         <Route path="/updatenontkdn/:id" element={<EditNonTkdn />} />
-        <Route path="/uploadimagetkdn/:id" element={<UploadImageTkdn />} />
-        <Route path="/uploadimagenontkdn/:id" element={<UploadImageNonTkdn />} />
+        {/* <Route path="/uploadimagetkdn/:id" element={<UploadImageTkdn />} />
+        <Route path="/uploadimagenontkdn/:id" element={<UploadImageNonTkdn />} /> */}
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="/detailtkdn/:id" element={<DetailProdukTkdn />} />
         <Route path="/listpc" element={<ListByPc />} />
         <Route path="/listlaptop" element={<ListByLaptop />} />
         <Route path="/listmonitor" element={<ListByMonitor />} />
         <Route path="/listkeyboard" element={<ListByKeyboard />} />
+        <Route path="/tambahkategori" element={<TambahKategori />} />
+        <Route path="/tambahdetailekslusif" element={<TambahDetailNonTkdn />} />
+        <Route path="/tambahdetailreguler" element={<TambahDetailTkdn />} />
       </Routes>
     </div>
   );
