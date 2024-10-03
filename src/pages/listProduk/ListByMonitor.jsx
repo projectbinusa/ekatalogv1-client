@@ -52,7 +52,7 @@ const ListByMonitor = () => {
                     <div className="shadow-lg rounded-lg overflow-hidden bg-white">
                       <div className="relative h-48 w-full">
                         <img 
-                          src={item.image} 
+                          // src={item.image} 
                           alt={item.namaProduk} 
                           className="w-full h-full object-cover"
                         />

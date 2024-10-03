@@ -78,7 +78,7 @@ const KualitasStandar = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex sm:flex-row bg-gray-50">
       <div className="sidebar w-full md:w-64 bg-gray-100 shadow-lg">
         <SidebarAdmin />
       </div>

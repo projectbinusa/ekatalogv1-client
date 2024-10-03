@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SidebarAdmin from "./Sidebar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const DashboardAdmin = () => {
   const [username, setUsername] = useState("");
@@ -15,8 +17,8 @@ const DashboardAdmin = () => {
       navigate("/login");
     } else {
       axios
-        .get("http://localhost:7000/api/pengguna", {
-          headers: { Authorization: `Bearer ${token}` },
+      .get("http://localhost:7000/api/pengguna", {
+        headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
           setUsername(response.data.usernamePengguna);
@@ -64,9 +66,9 @@ const DashboardAdmin = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col sm:flex-row">
+    <div className="min-h-screen flex sm:flex-row bg-gray-50">
       <SidebarAdmin />
-      <section className="text-gray-800 body-font flex-1 mt-20 px-4">
+      <section className="text-gray-800 body-font flex-1 mt-20 px-4 relative">
         {/* {username && (
           <div className="py-4 px-6">
             <h1
@@ -83,14 +85,48 @@ const DashboardAdmin = () => {
             </h1>
           </div>
         )} */}
-        <div className="mt-9 flex justify-center">
+
+        {/* Penempatan tombol dalam grid */}
+        <div className="mb-12 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 z-10">
+          <div className="flex flex-col space-y-4">
+            <Link to={`/tambahkategori`}>
+              <button
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition duration-300 transform hover:scale-105 flex items-center justify-center w-full max-w-xs"
+              >
+                <FontAwesomeIcon icon={faPlus} className="w-6 h-6 mr-3" />
+                Tambah Kategori
+              </button>
+            </Link>
+          </div>
+          <div className="flex flex-col space-y-4">
+            <Link to={`/tambahdetailekslusif`}>
+              <button
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition duration-300 transform hover:scale-105 flex items-center justify-center w-full max-w-xs"
+              >
+                <FontAwesomeIcon icon={faPlus} className="w-6 h-6 mr-3" />
+                Detail Produk Eksklusif
+              </button>
+            </Link>
+            <Link to={`/tambahdetailreguler`}>
+              <button
+                className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition duration-300 transform hover:scale-105 flex items-center justify-center w-full max-w-xs"
+              >
+                <FontAwesomeIcon icon={faPlus} className="w-6 h-6 mr-3" />
+                Detail Produk Reguler
+              </button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Tabel Produk */}
+        <div className="flex justify-center">
         <div className="overflow-x-auto border border-gray-200 rounded-lg shadow-lg w-full max-w-5xl">
-          <table className="min-w-full bg-white divide-y-2 divide-gray-200 table-fixed rounded-xl">
+          <table className="min-w-full bg-white divide-y-2 divide-gray-200 table-fixed rounded-lg">
             <thead>
               <tr className="bg-gray-200 text-gray-900 text-sm sm:text-base leading-normal">
                 <th className="py-3 px-6 text-left">Nama Produk</th>
                 <th className="py-3 px-6 text-left">Status</th>
-                <th className="py-3 px-6 text-left">Image</th>
+                {/* <th className="py-3 px-6 text-left">Image</th> */}
               </tr>
             </thead>
             <tbody
@@ -104,13 +140,13 @@ const DashboardAdmin = () => {
                 >
                   <td className="py-3 px-6">{p.namaProduk}</td>
                   <td className="py-3 px-6">{p.status}</td>
-                  <td className="py-3 px-6">
+                  {/* <td className="py-3 px-6">
                     <img
                       src={p.image}
                       alt={p.namaProduk}
                       className="w-20 h-20 object-cover rounded-md"
                     />
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

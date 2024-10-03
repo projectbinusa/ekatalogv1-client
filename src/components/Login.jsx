@@ -45,7 +45,7 @@ const Login = () => {
         localStorage.setItem("id", userData.idPengguna);
         localStorage.setItem("role", userData.rolePengguna);
         localStorage.setItem("token", response.data.data.token);
-
+  
         setTimeout(() => {
           navigate("/dashboard");
         }, 1500);
@@ -105,7 +105,7 @@ const Login = () => {
                     id="username"
                     type="text"
                     autoComplete="off"
-                    placeholder="Masukan Username"
+                    placeholder="`Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -123,7 +123,7 @@ const Login = () => {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="off"
-                    placeholder="Masukan Password"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"

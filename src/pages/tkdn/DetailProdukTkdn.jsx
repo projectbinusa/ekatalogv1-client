@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../firebase/Firebase";
+// import { getDownloadURL, ref } from "firebase/storage";
+// import { storage } from "../firebase/Firebase";
 import SidebarAdmin from "../../components/Sidebar";
 
 const DetailProdukTkdn = () => {
@@ -22,14 +22,14 @@ const DetailProdukTkdn = () => {
                     });
                     console.log("Data dari API:", response.data);
                     const productData = response.data.data;
-                    const imagePath = productData.image; 
-                    const imageRef = ref(storage, imagePath);
-                    console.log("Path gambar Firebase:", imagePath);
+                    // const imagePath = productData.image; 
+                    // const imageRef = ref(storage, imagePath);
+                    // console.log("Path gambar Firebase:", imagePath);
                     
-                    const imageUrl = await getDownloadURL(imageRef);
-                    console.log("URL gambar:", imageUrl);
+                    // const imageUrl = await getDownloadURL(imageRef);
+                    // console.log("URL gambar:", imageUrl);
 
-                    setQualityStandar({ ...productData, image: imageUrl });
+                    setQualityStandar({ ...productData /*, image: imageUrl */ });
                 } catch (error) {
                     console.error("Error fetching product details: ", error);
                 }
@@ -61,11 +61,11 @@ const DetailProdukTkdn = () => {
                     <div className="p-4 border-t border-gray-300 mx-auto">
                         {qualityStandar && (
                             <div>
-                                <img
+                                {/* <img
                                     src={qualityStandar.image}
                                     alt={qualityStandar.namaProduk}
                                     className="w-32 h-32 object-cover mb-2 mx-auto"
-                                />
+                                /> */}
                                 <p><strong>Nama Produk:</strong> {qualityStandar.namaProduk}</p>
                                 <p><strong>Status:</strong> {qualityStandar.status}</p>
                                 <p><strong>Layanan:</strong> {qualityStandar.layanan}</p>

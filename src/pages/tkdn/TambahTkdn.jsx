@@ -86,9 +86,8 @@ const TambahTkdn = () => {
       jenisProyek: formData.jenisProyek,
       layanan: formData.layanan,
       namaProduk: formData.namaProduk,
-      cashKredit: formData.cashKredit,
       status: formData.status.toLowerCase(), 
-      tanggal: formData.tanggal + "T00:00:00.000Z",
+      tanggal: `${formData.tanggal}T00:00:00.000Z`,
       idDetailProdukStandar: formData.idDetailProdukStandar, 
       idKategoriProduk: formData.idKategoriProduk,
     };
@@ -105,21 +104,14 @@ const TambahTkdn = () => {
 
       if (response.ok) {
         const result = await response.json();
-        const idBaru = result.data.id;
         console.log("Response:", result);
         Swal.fire({
           icon: 'success',
           title: 'Berhasil',
-          text: 'Data berhasil disimpan!, Silahkan upload gambar untuk menambah gambar',
-          showCancelButton: true,
-          confirmButtonText: 'Upload Gambar',
-          cancelButtonText: 'Kembali',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate(`/uploadimagetkdn/${idBaru}`); 
-          } else {
-            navigate("/kualitasstandar");
-          }
+          text: 'Data berhasil disimpan!',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          navigate("/kualitasstandar");
         });
       } else {
         console.error("Failed to submit data");
