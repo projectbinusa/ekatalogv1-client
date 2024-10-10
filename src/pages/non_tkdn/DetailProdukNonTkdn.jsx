@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-// import { getDownloadURL, ref } from "firebase/storage";
-// import { storage } from "../firebase/Firebase";
 import SidebarAdmin from "../../components/Sidebar";
 
 const DetailPage = () => {
@@ -61,19 +59,23 @@ const DetailPage = () => {
                     </p>
                     <div className="p-4 border-t border-gray-300 mx-auto">
                         {qualityTinggi && (
-                            <div>
-                                {/* <img
-                                    // src={qualityTinggi.image}
-                                    alt={qualityTinggi.namaProduk}
-                                    className="w-32 h-32 object-cover mb-2 mx-auto"
-                                /> */}
-                                <p><strong>Nama Produk:</strong> {qualityTinggi.namaProduk}</p>
-                                <p><strong>Status:</strong> {qualityTinggi.status}</p>
-                                <p><strong>Layanan:</strong> {qualityTinggi.layanan}</p>
-                                <p><strong>Jenis Proyek:</strong> {qualityTinggi.jenisProyek}</p>
-                                <p><strong>Deskripsi:</strong> {qualityTinggi.detailProdukKualitasTinggi.deskripsi}</p>
-                                <p><strong>Kategori:</strong> {qualityTinggi.kategoriProduk.namaKategori}</p>
-                                <p><strong>Harga:</strong> {qualityTinggi.detailProdukKualitasTinggi.hargaProduk}</p>
+                            <div className="flex flex-col md:flex-row items-center md:items-start">
+                                <div className="md:w-1/3 p-4 flex justify-center">
+                                    <img
+                                        src={qualityTinggi.foto}
+                                        alt={qualityTinggi.namaProduk}
+                                        className="w-48 h-48 object-cover mb-2"
+                                    />
+                                </div>
+                                <div className="md:w-2/3 p-4">
+                                    <p><strong>Nama Produk:</strong> {qualityTinggi.namaProduk}</p>
+                                    <p><strong>Status:</strong> {qualityTinggi.status}</p>
+                                    <p><strong>Layanan:</strong> {qualityTinggi.layanan}</p>
+                                    <p><strong>Jenis Proyek:</strong> {qualityTinggi.jenisProyek}</p>
+                                    <p><strong>Deskripsi:</strong> {qualityTinggi.detailProdukKualitasTinggi.deskripsi}</p>
+                                    <p><strong>Kategori:</strong> {qualityTinggi.kategoriProduk.namaKategori}</p>
+                                    <p><strong>Harga:</strong> {qualityTinggi.detailProdukKualitasTinggi.hargaProduk}</p>
+                                </div>
                             </div>
                         )}
                     </div>

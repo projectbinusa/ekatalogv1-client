@@ -9,6 +9,7 @@ const DashboardAdmin = () => {
   const [username, setUsername] = useState("");
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -65,6 +66,10 @@ const DashboardAdmin = () => {
     }
   }, []);
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="min-h-screen flex sm:flex-row bg-gray-50">
       <SidebarAdmin />
@@ -87,35 +92,36 @@ const DashboardAdmin = () => {
         )} */}
 
         {/* Penempatan tombol dalam grid */}
-        <div className="mb-12 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 z-10">
-          <div className="flex flex-col space-y-4">
-            <Link to={`/tambahkategori`}>
-              <button
-                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition duration-300 transform hover:scale-105 flex items-center justify-center w-full max-w-xs"
+        <div className="relative mb-4 self-end flex justify-end">
+          <button
+            onClick={toggleDropdown}
+            className="bg-green-500 text-white p-2 rounded-lg flex items-center justify-center"
+          >
+            <FontAwesomeIcon icon={faPlus} className="text-xl" />
+          </button>
+          {/* Dropdown menu */}
+          {isOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+              <Link
+                to={"/tambahkategori"}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                <FontAwesomeIcon icon={faPlus} className="w-6 h-6 mr-3" />
                 Tambah Kategori
-              </button>
-            </Link>
-          </div>
-          <div className="flex flex-col space-y-4">
-            <Link to={`/tambahdetailekslusif`}>
-              <button
-                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition duration-300 transform hover:scale-105 flex items-center justify-center w-full max-w-xs"
+              </Link>
+              <Link
+                to="/tambahdetailekslusif"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                <FontAwesomeIcon icon={faPlus} className="w-6 h-6 mr-3" />
-                Detail Produk Eksklusif
-              </button>
-            </Link>
-            <Link to={`/tambahdetailreguler`}>
-              <button
-                className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition duration-300 transform hover:scale-105 flex items-center justify-center w-full max-w-xs"
+                Detail Produk Tinggi
+              </Link>
+              <Link
+                to="/tambahdetailreguler"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                <FontAwesomeIcon icon={faPlus} className="w-6 h-6 mr-3" />
-                Detail Produk Reguler
-              </button>
-            </Link>
-          </div>
+                Detail Produk Standar
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Tabel Produk */}
@@ -126,7 +132,7 @@ const DashboardAdmin = () => {
               <tr className="bg-gray-200 text-gray-900 text-sm sm:text-base leading-normal">
                 <th className="py-3 px-6 text-left">Nama Produk</th>
                 <th className="py-3 px-6 text-left">Status</th>
-                {/* <th className="py-3 px-6 text-left">Image</th> */}
+                <th className="py-3 px-6 text-left">Image</th> 
               </tr>
             </thead>
             <tbody
@@ -140,13 +146,13 @@ const DashboardAdmin = () => {
                 >
                   <td className="py-3 px-6">{p.namaProduk}</td>
                   <td className="py-3 px-6">{p.status}</td>
-                  {/* <td className="py-3 px-6">
+                  <td className="py-3 px-6">
                     <img
-                      src={p.image}
+                      src={p.foto}
                       alt={p.namaProduk}
                       className="w-20 h-20 object-cover rounded-md"
                     />
-                  </td> */}
+                  </td>
                 </tr>
               ))}
             </tbody>

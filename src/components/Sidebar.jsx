@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import EC from "../assets/logo/EC.png";
 import Swal from "sweetalert2";
-// import { pengguna } from "./Api";
+import axios from "axios";
 
 const SidebarAdmin = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -21,13 +21,36 @@ const SidebarAdmin = () => {
   const [secondDropdownOpen, setSecondDropdownOpen] = useState(false);
   const location = useLocation();
   const id = localStorage.getItem("id");
-  const [profilePic, setProfilePic] = useState(
-    "https://kimia.fkip.usk.ac.id/wp-content/uploads/2017/10/1946429.png"
-  );
+  const [userData, setUserData] = useState(null);
+  const token = localStorage.getItem("token");
 
   const isActive = (path) => {
     return location.pathname === path;
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:7000/api/pengguna/${id}`,
+                {
+                    headers: {
+                      accept: "*/*",
+                      Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            setUserData(response.data.data);
+            if (response.data.data.imageUrl) {
+                setPreviewImage(response.data.data.imageUrl);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    fetchData();
+}, [id]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -122,11 +145,15 @@ const SidebarAdmin = () => {
             >
               <span className="absolute -inset-1.5"></span>
               <span className="sr-only">Open user menu</span>
-              <img
-                className="h-9 w-9 rounded-full bg-white"
-                src={profilePic}
-                alt=""
-              />
+               {userData && userData.foto ? ( 
+                    <img
+                        src={userData.foto}
+                        alt="Profile Preview"
+                        className="h-9 w-9 rounded-full bg-white"
+                        />
+                ) : (
+                    <p>Loading image...</p> 
+                )}
             </button>
           </div>
 
@@ -138,7 +165,7 @@ const SidebarAdmin = () => {
               aria-labelledby="user-menu-button"
               tabIndex="-1"
             >
-              <Link to="#">
+              <Link to={`/profileadmin/${id}`}>
                 <button
                   className="block px-4 py-2 text-sm"
                   role="menuitem"
