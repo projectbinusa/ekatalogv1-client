@@ -30,6 +30,11 @@ import ListByLaptop from "./pages/listProduk/ListByLaptop";
 import TambahKategori from "./pages/page_tambah/TambahKategori";
 import TambahDetailNonTkdn from "./pages/page_tambah/TambahDetailNonTkdn";
 import TambahDetailTkdn from "./pages/page_tambah/TambahDetailTkdn";
+import UploadImageNonTkdn from "./pages/non_tkdn/UploadImageNonTkdn";
+import UploadImageTkdn from "./pages/tkdn/UploadImageTkdn";
+import Profile from "./pages/admin/EditProfile";
+import ProfilAdmin from "./pages/admin/ProfilAdmin";
+import EditPassword from "./pages/admin/EditPassword";
 
 function App() {
   return (
@@ -53,8 +58,8 @@ function App() {
         <Route path="/tambahnontkdn" element={<TambahNonTkdn />} />
         <Route path="/updatetkdn/:id" element={<EditTkdn />} />
         <Route path="/updatenontkdn/:id" element={<EditNonTkdn />} />
-        {/* <Route path="/uploadimagetkdn/:id" element={<UploadImageTkdn />} />
-        <Route path="/uploadimagenontkdn/:id" element={<UploadImageNonTkdn />} /> */}
+        <Route path="/uploadimagetkdn/:id" element={<UploadImageTkdn />} />
+        <Route path="/uploadimagenontkdn/:id" element={<UploadImageNonTkdn />} />
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="/detailtkdn/:id" element={<DetailProdukTkdn />} />
         <Route path="/listpc" element={<ListByPc />} />
@@ -64,6 +69,9 @@ function App() {
         <Route path="/tambahkategori" element={<TambahKategori />} />
         <Route path="/tambahdetailekslusif" element={<TambahDetailNonTkdn />} />
         <Route path="/tambahdetailreguler" element={<TambahDetailTkdn />} />
+        <Route path="/updateprofil/:id" element={<Profile />} />
+        <Route path="/profileadmin/:id" element={<ProfilAdmin />}/>
+        <Route path="/updatepassword" element={<EditPassword />} />
       </Routes>
     </div>
   );
