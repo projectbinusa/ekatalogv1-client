@@ -3,11 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SidebarAdmin from "./Sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardCheck, faPlus, faTags } from "@fortawesome/free-solid-svg-icons";
 
 const DashboardAdmin = () => {
   const [username, setUsername] = useState("");
   const [products, setProducts] = useState([]);
+  const [totalStandar, setTotalStandar] = useState(0);
+  const [totalTinggi, setTotalTinggi] = useState(0);
+  const [totalKategori, setTotalKategori] = useState(0);
+  const limitedProducts = products.slice(0, 20);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,23 +52,39 @@ const DashboardAdmin = () => {
         }),
         axios.get("http://localhost:7000/api/kualitas_tinggi", {
           headers: { Authorization: `Bearer ${token}` },
-        })
+        }),
       ])
-      .then((responses) => {
-        const [kualitasStandarResponse, kualitasTinggiResponse] = responses;
-        const kualitasStandarData = kualitasStandarResponse.data.data.slice(0, 10);
-        const kualitasTinggiData = kualitasTinggiResponse.data.data.slice(0, 10);
-        const combinedProducts = [
-          ...kualitasStandarData,
-          ...kualitasTinggiData
-        ];
-        setProducts(combinedProducts);
-      })
-      .catch((error) => {
-        console.error("Gagal mengambil data produk: ", error);
-      });
+        .then((responses) => {
+          const [kualitasStandarResponse, kualitasTinggiResponse] = responses;
+          const kualitasStandarData = kualitasStandarResponse.data.data;
+          const kualitasTinggiData = kualitasTinggiResponse.data.data;
+
+          setProducts([...kualitasStandarData, ...kualitasTinggiData]);
+          setTotalStandar(kualitasStandarData.length);
+          setTotalTinggi(kualitasTinggiData.length);
+        })
+        .catch((error) => {
+          console.error("Gagal mengambil data produk: ", error);
+        });
     }
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios.get("http://localhost:7000/api/kategori_produk", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((responses) => {
+        const kategoriData = responses.data.data;
+
+        setTotalKategori(kategoriData.length);
+      })
+      .catch((error) => {
+        console.error("Gagal mengambil data kategori: ", error);
+      });
+    }
+  })
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -74,22 +94,29 @@ const DashboardAdmin = () => {
     <div className="min-h-screen flex sm:flex-row bg-gray-50">
       <SidebarAdmin />
       <section className="text-gray-800 body-font flex-1 mt-20 px-4 relative">
-        {/* {username && (
-          <div className="py-4 px-6">
-            <h1
-              className="text-gray-800 text-center relative text-lg p-3 bg-gray-100"
-              style={{
-                boxShadow: "2px 2px 4px rgba(0,0,0,0,.4)",
-                borderRadius: "10px",
-              }}
-            >
-              Hai, <strong>{username}</strong>!{" "}
-              <span style={{ boxShadow: "none" }}>
-                Selamat datang di dashboard Admin.
-              </span>
-            </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 mt-6">
+          <div className="bg-blue-100 shadow-md rounded-lg p-6 flex justify-between items-center">
+            <div>
+              <h2 className="text-lg font-bold text-blue-700 mb-2">Produk Standar</h2>
+              <p className="text-3xl font-semibold text-blue-900">{totalStandar}</p>
+            </div>
+            <FontAwesomeIcon icon={faClipboardCheck} className="text-5xl text-blue-500" />
           </div>
-        )} */}
+          <div className="bg-green-100 shadow-md rounded-lg p-6 flex justify-between items-center">
+            <div>
+              <h2 className="text-lg font-bold text-green-700 mb-2">Produk Tinggi</h2>
+              <p className="text-3xl font-semibold text-green-900">{totalTinggi}</p>
+            </div>
+            <FontAwesomeIcon icon={faClipboardCheck} className="text-5xl text-green-500" />
+          </div>
+          <div className="bg-yellow-100 shadow-md rounded-lg p-6 flex justify-between items-center"> 
+            <div>
+              <h2 className="text-lg font-bold text-yellow-700 mb-2">Kategori</h2>
+              <p className="text-3xl font-semibold text-yellow-900">{totalKategori}</p>
+            </div>
+            <FontAwesomeIcon icon={faTags} className="text-5xl text-yellow-500" /> 
+          </div>
+        </div>
 
         {/* Penempatan tombol dalam grid */}
         <div className="relative mb-4 self-end flex justify-end">
@@ -132,27 +159,27 @@ const DashboardAdmin = () => {
               <tr className="bg-gray-200 text-gray-900 text-sm sm:text-base leading-normal">
                 <th className="py-3 px-6 text-left">Nama Produk</th>
                 <th className="py-3 px-6 text-left">Status</th>
-                <th className="py-3 px-6 text-left">Image</th> 
+                {/* <th className="py-3 px-6 text-left">Image</th>  */}
               </tr>
             </thead>
             <tbody
               style={{ backgroundColor: "white" }}
               className="text-gray-600 text-sm sm:text-base font-normal"
             >
-              {products.map((p, index) => (
+              {limitedProducts.map((p, index) => (
                 <tr
                   key={`${p.id}-${index}`}
                   className="border-b border-gray-300 hover:bg-gray-100"
                 >
                   <td className="py-3 px-6">{p.namaProduk}</td>
                   <td className="py-3 px-6">{p.status}</td>
-                  <td className="py-3 px-6">
+                  {/* <td className="py-3 px-6">
                     <img
                       src={p.foto}
                       alt={p.namaProduk}
                       className="w-20 h-20 object-cover rounded-md"
                     />
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

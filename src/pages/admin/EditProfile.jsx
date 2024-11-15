@@ -126,7 +126,7 @@ const Profile = () => {
             </div>
             <div className="content-page flex-grow p-8 mt-8 flex gap-4">
                 {/* Card untuk Update Gambar */}
-                <div className="bg-white p-5 mb-9 border border-gray-200 rounded-xl shadow-lg w-full md:w-1/2 mt-6">
+                {/* <div className="bg-white p-5 mb-9 border border-gray-200 rounded-xl shadow-lg w-full md:w-1/2 mt-6">
                     <h2 className="text-lg font-semibold mb-4">Update Gambar</h2>
                     <div className="flex-grow flex flex-col items-center justify-center">
                         <img
@@ -150,7 +150,7 @@ const Profile = () => {
                             Simpan
                         </button>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Card untuk Update Data */}
                 <div className="bg-white p-5 mb-9 border border-gray-200 rounded-xl shadow-lg w-full md:w-1/2 mt-6">

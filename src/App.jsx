@@ -15,11 +15,9 @@ import DashboardAdmin from "./components/Dashboard";
 import Sidebar from "./components/Sidebar";
 import KualitasStandar from "./pages/tkdn/KualitasStandar";
 import TambahTkdn from "./pages/tkdn/TambahTkdn";
-// import UploadImageTkdn from "./pages/tkdn/UploadImageTkdn";
 import EditTkdn from "./pages/tkdn/EditTkdn";
 import KualitasTinggi from "./pages/non_tkdn/KualitasTinggi";
 import TambahNonTkdn from "./pages/non_tkdn/TambahNonTkdn";
-// import UploadImageNonTkdn from "./pages/non_tkdn/UploadImageNonTkdn";
 import EditNonTkdn from "./pages/non_tkdn/EditNonTkdn";
 import DetailPage from "./pages/non_tkdn/DetailProdukNonTkdn";
 import DetailProdukTkdn from "./pages/tkdn/DetailProdukTkdn";
@@ -30,8 +28,8 @@ import ListByLaptop from "./pages/listProduk/ListByLaptop";
 import TambahKategori from "./pages/page_tambah/TambahKategori";
 import TambahDetailNonTkdn from "./pages/page_tambah/TambahDetailNonTkdn";
 import TambahDetailTkdn from "./pages/page_tambah/TambahDetailTkdn";
-import UploadImageNonTkdn from "./pages/non_tkdn/UploadImageNonTkdn";
-import UploadImageTkdn from "./pages/tkdn/UploadImageTkdn";
+// import UploadImageNonTkdn from "./pages/non_tkdn/UploadImageNonTkdn";
+// import UploadImageTkdn from "./pages/tkdn/UploadImageTkdn";
 import Profile from "./pages/admin/EditProfile";
 import ProfilAdmin from "./pages/admin/ProfilAdmin";
 import EditPassword from "./pages/admin/EditPassword";
@@ -58,8 +56,8 @@ function App() {
         <Route path="/tambahnontkdn" element={<TambahNonTkdn />} />
         <Route path="/updatetkdn/:id" element={<EditTkdn />} />
         <Route path="/updatenontkdn/:id" element={<EditNonTkdn />} />
-        <Route path="/uploadimagetkdn/:id" element={<UploadImageTkdn />} />
-        <Route path="/uploadimagenontkdn/:id" element={<UploadImageNonTkdn />} />
+        {/* <Route path="/uploadimagetkdn/:id" element={<UploadImageTkdn />} />
+        <Route path="/uploadimagenontkdn/:id" element={<UploadImageNonTkdn />} /> */}
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="/detailtkdn/:id" element={<DetailProdukTkdn />} />
         <Route path="/listpc" element={<ListByPc />} />
