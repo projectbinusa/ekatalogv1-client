@@ -20,14 +20,8 @@ const DetailProdukTkdn = () => {
                     });
                     console.log("Data dari API:", response.data);
                     const productData = response.data.data;
-                    // const imagePath = productData.image; 
-                    // const imageRef = ref(storage, imagePath);
-                    // console.log("Path gambar Firebase:", imagePath);
-                    
-                    // const imageUrl = await getDownloadURL(imageRef);
-                    // console.log("URL gambar:", imageUrl);
 
-                    setQualityStandar({ ...productData /*, image: imageUrl */ });
+                    setQualityStandar({ ...productData });
                 } catch (error) {
                     console.error("Error fetching product details: ", error);
                 }
@@ -59,13 +53,13 @@ const DetailProdukTkdn = () => {
                     <div className="p-4 border-t border-gray-300 mx-auto">
                         {qualityStandar && (
                             <div className="flex flex-col md:flex-row items-center md:items-start">
-                                <div className="md:w-1/3 p-4 flex justify-center">
+                                {/* <div className="md:w-1/3 p-4 flex justify-center">
                                     <img
                                         src={qualityStandar.foto}
                                         alt={qualityStandar.namaProduk}
                                         className="w-48 h-48 object-cover mb-2"
                                     />
-                                </div>
+                                </div> */}
                                 <div className="md:w-2/3 p-4">
                                     <p><strong>Nama Produk:</strong> {qualityStandar.namaProduk}</p>
                                     <p><strong>Status:</strong> {qualityStandar.status}</p>

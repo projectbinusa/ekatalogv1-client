@@ -60,13 +60,13 @@ const DetailPage = () => {
                     <div className="p-4 border-t border-gray-300 mx-auto">
                         {qualityTinggi && (
                             <div className="flex flex-col md:flex-row items-center md:items-start">
-                                <div className="md:w-1/3 p-4 flex justify-center">
+                                {/* <div className="md:w-1/3 p-4 flex justify-center">
                                     <img
                                         src={qualityTinggi.foto}
                                         alt={qualityTinggi.namaProduk}
                                         className="w-48 h-48 object-cover mb-2"
                                     />
-                                </div>
+                                </div> */}
                                 <div className="md:w-2/3 p-4">
                                     <p><strong>Nama Produk:</strong> {qualityTinggi.namaProduk}</p>
                                     <p><strong>Status:</strong> {qualityTinggi.status}</p>

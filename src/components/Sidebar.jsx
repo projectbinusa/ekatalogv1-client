@@ -143,8 +143,9 @@ const SidebarAdmin = () => {
               aria-haspopup="true"
               onClick={toggleUserMenu}
             >
-              <span className="absolute -inset-1.5"></span>
-              <span className="sr-only">Open user menu</span>
+              <FontAwesomeIcon icon={faCaretDown} className="text-gray-700 text-xl" />
+              {/* <span className="absolute -inset-1.5"></span> */}
+              {/* <span className="sr-only">Open user menu</span>
                {userData && userData.foto ? ( 
                     <img
                         src={userData.foto}
@@ -153,7 +154,7 @@ const SidebarAdmin = () => {
                         />
                 ) : (
                     <p>Loading image...</p> 
-                )}
+                )} */}
             </button>
           </div>
 
@@ -265,7 +266,7 @@ const SidebarAdmin = () => {
             )}
           </li>
 
-          <li className="py-2 px-3 my-2 rounded cursor-pointer hover:bg-gray-200 hover:text-black">
+          {/* <li className="py-2 px-3 my-2 rounded cursor-pointer hover:bg-gray-200 hover:text-black">
             <div
               className="flex items-center justify-between"
               onClick={toggleSecondDropdown}
@@ -332,7 +333,7 @@ const SidebarAdmin = () => {
                 </li>
               </ul>
             )}
-          </li>
+          </li> */}
           <hr className="absolute bottom-14 w-60" />
         </ul>
       </div>

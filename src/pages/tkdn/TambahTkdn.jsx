@@ -108,16 +108,10 @@ const TambahTkdn = () => {
         console.log("Response:", result);
         Swal.fire({
           icon: 'success',
-          text: 'Data berhasil disimpan!, Silahkan upload gambar untuk menambah gambar',
-          showCancelButton: true,
-          confirmButtonText: 'Upload Gambar',
-          cancelButtonText: 'Kembali',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate(`/uploadimagetkdn/${idBaru}`); 
-          } else {
+          text: 'Data berhasil disimpan!',
+          confirmButtonText: 'Kembali',
+        }).then(() => {
             navigate("/kualitasstandar");
-          }
         });
       } else {
         console.error("Failed to submit data");
